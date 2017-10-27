@@ -52,8 +52,6 @@ io.on('connection', (sock) => {
     if (socket.square.destY < 400) {
       console.log(`data.destY:${data.destY}`);
       socket.square.destY +=10;
-      socket.square.y += 10;
-      socket.square.prevY += 10;
       console.log(`square.destY:${socket.square.destY}`);
     }
 
