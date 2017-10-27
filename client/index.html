@@ -40,7 +40,7 @@
         let squares = {};
         
         const update = (data) => {
-          debugger;
+          //debugger;
           
           if(!squares[data.hash]) {
             squares[data.hash] = data;
@@ -54,12 +54,25 @@
           }
           
           
-          square.lastUpdate= data.lastUpdate;
+          if(hash === square.hash){
+            console.log('updating this client');
+          //square.lastUpdate= data.lastUpdate;
           //square.prevX = data.prevX;
           //square.prevY = data.prevY;
-          square.destX = data.destX;
-          square.destY = data.destY;
-          square.alpha = 0.05;
+          //square.destX = data.destX;
+          //square.destY = data.destY;
+            square.y = data.y;
+          //square.alpha = 0.05;
+          }else{  
+            square.lastUpdate= data.lastUpdate;
+            square.prevX = data.prevX;
+            square.prevY = data.prevY;
+            square.destX = data.destX;
+            square.destY = data.destY;
+            square.alpha = 0.05;
+          }
+          
+
         };
 
 
@@ -90,7 +103,7 @@
             square.destX -=2;
           }
           
-          if(moveRight && square.x < canvas.width){
+          if(moveRight && square.x < canvas.width - square.width){
             square.destX += 2;
           }
           
@@ -99,7 +112,7 @@
         };
         
         const redraw = (time) => {
-            debugger;
+            //debugger;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         
             const keys = Object.keys(squares);

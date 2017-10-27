@@ -41,31 +41,35 @@ io.on('connection', (sock) => {
   };
 
   socket.emit('joined', socket.square);
+
+
   socket.on('movementUpdate', (data) => {
-    
-    
+
+
     socket.square = data;
     socket.square.lastUpdate = new Date().getTime();
-    
-    if(socket.square.destY < 400){
+
+    if (socket.square.destY < 400) {
       console.log(`data.destY:${data.destY}`);
-      socket.square.destY = socket.square.destY +10;
+      socket.square.destY +=10;
+      socket.square.y += 10;
+      socket.square.prevY += 10;
       console.log(`square.destY:${socket.square.destY}`);
     }
-    
+
     socket.broadcast.to('room1').emit('updatedMovement', socket.square);
   });
 
-  socket.on('playerJump',(data) =>{
+  socket.on('playerJump', (data) => {
     socket.square = data;
     socket.square.lastUpdate = new Date().getTime();
-    
-    if(socket.square.y >= 400){
+
+    if (socket.square.destY >= 400) {
       console.log(`${socket.square} is jumping`);
-      socket.square.destY -=100;
+      socket.square.destY -= 100;
     }
   });
-  
+
   socket.on('disconnect', () => {
     io.sockets.in('room1').emit('left', socket.square.hash);
     socket.leave('room1');
