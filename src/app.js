@@ -55,7 +55,7 @@ io.on('connection', (sock) => {
       console.log(`square.destY:${socket.square.destY}`);
     }
 
-    socket.broadcast.to('room1').emit('updatedMovement', socket.square);
+    io.sockets.in('room1').emit('updatedMovement', socket.square);
   });
 
   socket.on('playerJump', (data) => {
@@ -66,6 +66,7 @@ io.on('connection', (sock) => {
       console.log(`${socket.square} is jumping`);
       socket.square.destY -= 100;
     }
+    io.sockets.in('room1').emit('updatedMovement', socket.square);
   });
 
   socket.on('disconnect', () => {
